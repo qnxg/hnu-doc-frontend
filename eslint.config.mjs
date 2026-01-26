@@ -5,4 +5,6 @@ export default antfu({
     indent: 2,
     quotes: "double",
   },
+  unocss: true,
+  nextjs: true,
 })
