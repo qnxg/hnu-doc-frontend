@@ -1,6 +1,7 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"
 import axios from "axios"
 import config from "@/src/lib/config"
+import { converter } from "@/src/lib/field-converter"
 
 /**
  * 默认响应接口
@@ -44,7 +45,7 @@ const clientRequest = {
     myAxios(config)
       .then((axiosResponse: AxiosResponse<Response<T>>) => {
         const response = axiosResponse.data
-        return response.data
+        return converter<T>(response.data)
       })
       .catch((error: AxiosError<Response<T>>) => {
         if (error.response) {

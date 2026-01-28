@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from "axios"
 import { cookies } from "next/headers"
-import clientRequest from "./client"
+import clientRequest from "@/src/lib/client"
 
 const serverRequest = {
   request: async <T>(config: AxiosRequestConfig): Promise<T> => {
