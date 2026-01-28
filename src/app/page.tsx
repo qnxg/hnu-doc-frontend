@@ -1,6 +1,7 @@
 "use client"
 
 import { IconLoader, IconLogin2 } from "@tabler/icons-react"
+import { useRouter } from "next/navigation"
 import React, { useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
@@ -18,6 +19,8 @@ function LoginForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [{ stuID, password }, setForm] = useState({ stuID: "", password: "" })
 
+  const router = useRouter()
+
   const handleLogin = () => {
     if (!stuID || !password) {
       toast.error("请填写学号和密码")
@@ -30,6 +33,8 @@ function LoginForm() {
         if (response.token && response.user) {
           document.cookie = `token=${response.token}; path=/; max-age=${24 * 60 * 60}; SameSite=Strict; Secure`
           setUser(response.user)
+
+          void router.push("/dashboard")
         }
       })
       .catch((error) => {
