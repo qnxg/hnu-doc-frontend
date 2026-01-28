@@ -33,12 +33,8 @@ class RequestErrorImpl extends Error implements RequestError {
   }
 }
 
-const BACKEND_BASE = config.BACKEND_BASEURL
-const API_SUFFIX = config.API_SUFFIX
-const API_URL = BACKEND_BASE + API_SUFFIX
-
 const myAxios = axios.create({
-  baseURL: API_URL,
+  baseURL: config.BACKEND_URL,
   timeout: 10000,
   withCredentials: true,
 })

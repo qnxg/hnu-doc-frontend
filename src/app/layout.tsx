@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import React from "react"
+import { Toaster } from "sonner"
 import { getUserInfoServer } from "@/src/apis/user.server"
 import { UserProvider } from "@/src/contexts/user-context"
 import "./globals.css"
@@ -34,6 +35,7 @@ export default async function RootLayout({
       >
         <UserProvider initialUser={user}>
           {children}
+          <Toaster />
         </UserProvider>
       </body>
     </html>

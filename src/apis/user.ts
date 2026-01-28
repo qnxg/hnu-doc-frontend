@@ -13,7 +13,7 @@ export interface UserInfo {
 
 export interface LoginResponse {
   token: string
-  info: UserInfo
+  user: UserInfo
 }
 
 export async function userLogin(data: LoginRequest) {
