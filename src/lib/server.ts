@@ -10,23 +10,23 @@ const serverRequest = {
     if (token) {
       headers.Authorization = `Bearer ${token}`
     }
-    return clientRequest.request<T>({ ...config, headers: { ...config.headers, ...headers } })
+    return await clientRequest.request<T>({ ...config, headers: { ...config.headers, ...headers } })
   },
 
-  get: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return serverRequest.request<T>({ method: "GET", url, params: data, ...config })
+  get: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await serverRequest.request<T>({ method: "GET", url, params: data, ...config })
   },
 
-  post: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return serverRequest.request<T>({ method: "POST", url, data, ...config })
+  post: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await serverRequest.request<T>({ method: "POST", url, data, ...config })
   },
 
-  put: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return serverRequest.request<T>({ method: "PUT", url, data, ...config })
+  put: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await serverRequest.request<T>({ method: "PUT", url, data, ...config })
   },
 
-  delete: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return serverRequest.request<T>({ method: "DELETE", url, data, ...config })
+  delete: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await serverRequest.request<T>({ method: "DELETE", url, data, ...config })
   },
 }
 

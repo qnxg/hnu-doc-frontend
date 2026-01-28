@@ -16,14 +16,14 @@ export interface LoginResponse {
   info: UserInfo
 }
 
-export function userLogin(data: LoginRequest) {
-  return request.post<LoginResponse>("/user/login", data)
+export async function userLogin(data: LoginRequest) {
+  return await request.post<LoginResponse>("/user/login", data)
 }
 
-export function getUserInfo() {
-  return request.get<UserInfo>("/user/whoami")
+export async function getUserInfo() {
+  return await request.get<UserInfo>("/user/whoami")
 }
 
-export function userLogout() {
-  return request.get("/user/logout")
+export async function userLogout() {
+  return await request.get("/user/logout")
 }

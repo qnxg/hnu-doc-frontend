@@ -65,33 +65,33 @@ const clientRequest = {
         // 未收到响应
           throw new RequestErrorImpl(
             "NO_RESPONSE",
-            "服务器无响应",
+            error.message,
             error,
           )
         }
         else {
           throw new RequestErrorImpl(
             "REQUEST_SEND_FAILED",
-            "请求发送错误",
+            error.message,
             error,
           )
         }
       })),
 
-  get: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return clientRequest.request<T>({ method: "GET", url, params: data, ...config })
+  get: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await clientRequest.request<T>({ method: "GET", url, params: data, ...config })
   },
 
-  post: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return clientRequest.request<T>({ method: "POST", url, data, ...config })
+  post: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await clientRequest.request<T>({ method: "POST", url, data, ...config })
   },
 
-  put: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return clientRequest.request<T>({ method: "PUT", url, data, ...config })
+  put: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await clientRequest.request<T>({ method: "PUT", url, data, ...config })
   },
 
-  delete: <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
-    return clientRequest.request<T>({ method: "DELETE", url, data, ...config })
+  delete: async <T>(url: string, data?: object, config?: AxiosRequestConfig) => {
+    return await clientRequest.request<T>({ method: "DELETE", url, data, ...config })
   },
 }
 
