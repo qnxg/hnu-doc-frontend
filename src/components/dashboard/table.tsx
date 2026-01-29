@@ -14,14 +14,10 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-function CollectionTableRow({
-  collection,
-  showDetail,
-  handleShowDetail,
+function CollectionTableDetail({
+  document,
 }: Readonly<{
-  collection: Collection
-  showDetail: boolean
-  handleShowDetail: () => void
+  document: Document
 }>) {
   const description = (item: Document): string => {
     const DOCUMENT_TYPE_MAP = new Map([
@@ -59,6 +55,44 @@ function CollectionTableRow({
   }
 
   return (
+    <div key={document.id} className="bg-white border border-gray-200 p-3 md:p-4 shadow-sm">
+      <div className="flex flex-col md:flex-row md:documents-center gap-2 md:gap-4">
+        {/* 主要信息区域 */}
+        <div className="flex-1 min-w-0 space-y-1">
+          <h4 className="font-medium text-sm md:text-base text-gray-900 truncate">{document.name}</h4>
+          <p className="text-xs md:text-sm text-gray-600 leading-relaxed break-words">{description(document)}</p>
+        </div>
+
+        {/* 右侧信息和按钮区域 */}
+        <div className="flex justify-between md:justify-end documents-center gap-4 md:gap-6">
+          <div className="flex gap-4 md:gap-6 text-xs md:text-sm text-gray-500">
+            <span>{`共${document.page}页`}</span>
+            <span>{`${document.answer ? "" : "不"}含答案`}</span>
+          </div>
+          <Button
+            size="xs"
+            variant="outline"
+            onClick={() => handleDownload(document.id)}
+            className="flex-shrink-0"
+          >
+            <IconDownload />
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CollectionTableRow({
+  collection,
+  showDetail,
+  handleShowDetail,
+}: Readonly<{
+  collection: Collection
+  showDetail: boolean
+  handleShowDetail: () => void
+}>) {
+  return (
     <>
       <TableRow key={collection.id}>
         <TableCell className="w-4 text-center font-medium">{collection.name}</TableCell>
@@ -81,31 +115,10 @@ function CollectionTableRow({
           <TableCell colSpan={3} className="p-0">
             <div className="border-l-4 border-primary ml-2 pl-2">
               {collection.items.map(item => (
-                <div key={item.id} className="bg-white border border-gray-200 p-3 md:p-4 shadow-sm">
-                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-                    {/* 主要信息区域 */}
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <h4 className="font-medium text-sm md:text-base text-gray-900 truncate">{item.name}</h4>
-                      <p className="text-xs md:text-sm text-gray-600 leading-relaxed break-words">{description(item)}</p>
-                    </div>
-
-                    {/* 右侧信息和按钮区域 */}
-                    <div className="flex justify-between md:justify-end items-center gap-4 md:gap-6">
-                      <div className="flex gap-4 md:gap-6 text-xs md:text-sm text-gray-500">
-                        <span>{`共${item.page}页`}</span>
-                        <span>{`${item.answer ? "" : "不"}含答案`}</span>
-                      </div>
-                      <Button
-                        size="xs"
-                        variant="outline"
-                        onClick={() => handleDownload(item.id)}
-                        className="flex-shrink-0"
-                      >
-                        <IconDownload />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <CollectionTableDetail
+                  key={item.id}
+                  document={item}
+                />
               ))}
             </div>
           </TableCell>
