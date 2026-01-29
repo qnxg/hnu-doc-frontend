@@ -1,38 +1,9 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios"
+import type { BaseResponse } from "@/src/models/response"
 import axios from "axios"
 import config from "@/src/lib/config"
 import { converter } from "@/src/lib/field-converter"
-
-/**
- * 默认响应接口
- *
- * @template T - 响应数据的类型
- * @property {string} status - 请求状态, 成功为 "OK", 失败为对应错误代码
- * @property {T} data - 负载数据
- * @property {string} msg - 错误信息文本
- */
-export interface Response<T> {
-  status: string
-  data: T
-  msg: string
-}
-
-export interface RequestError {
-  status: string
-  msg: string
-  originalError?: AxiosError
-}
-
-class RequestErrorImpl extends Error implements RequestError {
-  constructor(
-    public status: string,
-    public msg: string,
-    public originalError?: AxiosError,
-  ) {
-    super(msg)
-    this.name = "RequestError"
-  }
-}
+import { RequestErrorImpl } from "@/src/models/response"
 
 const myAxios = axios.create({
   baseURL: config.BACKEND_URL,
@@ -43,11 +14,11 @@ const myAxios = axios.create({
 const clientRequest = {
   request: async <T>(config: AxiosRequestConfig): Promise<T> => (
     myAxios(config)
-      .then((axiosResponse: AxiosResponse<Response<T>>) => {
+      .then((axiosResponse: AxiosResponse<BaseResponse<T>>) => {
         const response = axiosResponse.data
         return converter<T>(response.data)
       })
-      .catch((error: AxiosError<Response<T>>) => {
+      .catch((error: AxiosError<BaseResponse<T>>) => {
         if (error.response) {
         // 接受到非 200 响应
           const axiosResponse = error.response

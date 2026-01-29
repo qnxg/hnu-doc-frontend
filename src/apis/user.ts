@@ -1,14 +1,9 @@
+import type { UserInfo } from "@/src/models/user"
 import request from "@/src/lib/client"
 
 export interface LoginRequest {
   stuid: string
   password: string
-}
-
-export interface UserInfo {
-  stuID: string
-  name: string
-  permissions: string[]
 }
 
 export interface LoginResponse {

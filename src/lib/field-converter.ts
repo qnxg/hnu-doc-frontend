@@ -1,5 +1,5 @@
 const CONVERSION_MAP = ["id"]
-const suffixPattern = new RegExp(`(_(${CONVERSION_MAP.join("|")}))(?=_|$)`, "g")
+const suffixPattern = new RegExp(`_(${CONVERSION_MAP.join("|")})(?=_|$)`, "g")
 const underscorePattern = /_([a-z])/g
 
 function toCamelCase(str: string): string {
@@ -7,8 +7,8 @@ function toCamelCase(str: string): string {
 }
 
 function toUpperCase(str: string): string {
-  return str.replace(suffixPattern, (match, p1, p2) => {
-    return p2.toUpperCase()
+  return str.replace(suffixPattern, (match, p1) => {
+    return p1.toUpperCase()
   })
 }
 

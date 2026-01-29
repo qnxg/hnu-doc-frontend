@@ -1,4 +1,4 @@
-import type { UserInfo } from "@/src/apis/user"
+import type { UserInfo } from "@/src/models/user"
 import request from "@/src/lib/server"
 
 export async function getUserInfoServer() {
