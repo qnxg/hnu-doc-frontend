@@ -77,30 +77,36 @@ function CollectionTableRow({
         </TableCell>
       </TableRow>
       {showDetail && (
-        <TableRow className="bg-gray-50">
+        <TableRow>
           <TableCell colSpan={3} className="p-0">
-            <div className="bg-gray-50 border-l-4 border-primary ml-2 my-1 rounded-r">
-              <Table className="bg-white rounded shadow-sm">
-                <TableBody>
-                  {collection.items.map(item => (
-                    <TableRow key={item.id} className="hover:bg-gray-50">
-                      <TableCell className="w-4 text-center font-medium pl-6">{item.name}</TableCell>
-                      <TableCell className="w-full whitespace-normal break-words">{description(item)}</TableCell>
-                      <TableCell className="w-4 text-center">{`共${item.page}页`}</TableCell>
-                      <TableCell className="w-4 text-center">{`${item.answer ? "" : "不"}含答案`}</TableCell>
-                      <TableCell>
-                        <Button
-                          size="xs"
-                          variant="outline"
-                          onClick={() => handleDownload(item.id)}
-                        >
-                          <IconDownload />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+            <div className="border-l-4 border-primary ml-2 pl-2">
+              {collection.items.map(item => (
+                <div key={item.id} className="bg-white border border-gray-200 p-3 md:p-4 shadow-sm">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                    {/* 主要信息区域 */}
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <h4 className="font-medium text-sm md:text-base text-gray-900 truncate">{item.name}</h4>
+                      <p className="text-xs md:text-sm text-gray-600 leading-relaxed break-words">{description(item)}</p>
+                    </div>
+
+                    {/* 右侧信息和按钮区域 */}
+                    <div className="flex justify-between md:justify-end items-center gap-4 md:gap-6">
+                      <div className="flex gap-4 md:gap-6 text-xs md:text-sm text-gray-500">
+                        <span>{`共${item.page}页`}</span>
+                        <span>{`${item.answer ? "" : "不"}含答案`}</span>
+                      </div>
+                      <Button
+                        size="xs"
+                        variant="outline"
+                        onClick={() => handleDownload(item.id)}
+                        className="flex-shrink-0"
+                      >
+                        <IconDownload />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </TableCell>
         </TableRow>
