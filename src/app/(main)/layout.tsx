@@ -23,7 +23,9 @@ export default function MainLayout({
   return (
     <div className="flex flex-col min-h-screen items-center">
       <Navbar />
-      {children}
+      <div className="flex flex-1 w-full items-center justify-center px-4 lg:px-16">
+        {children}
+      </div>
     </div>
   )
 }
