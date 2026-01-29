@@ -30,12 +30,12 @@ interface RequestError {
 /**
  * 请求错误实现类
  *
- * 继承自 Error 类并实现 RequestError 接口，用于封装 API 请求过程中发生的错误
+ * 继承自 Error 类并实现 RequestError 接口, 用于封装 API 请求过程中发生的错误
  *
  * @class RequestErrorImpl
  * @extends Error
  * @implements RequestError
- * @property {string} status - 请求状态，成功为 "OK"，失败为对应错误代码
+ * @property {string} status - 请求状态, 成功为 "OK", 失败为对应错误代码
  * @property {string} msg - 错误信息文本
  * @property {AxiosError} [originalError] - 原始的 Axios 错误对象
  */

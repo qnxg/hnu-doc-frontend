@@ -11,7 +11,7 @@ export default function Tabbar() {
   const { user } = useUser()
   const pathname = usePathname()
 
-  // 如果用户未登录，不显示 tabbar
+  // 如果用户未登录, 不显示 tabbar
   if (!user) {
     return null
   }

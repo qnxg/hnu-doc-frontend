@@ -49,7 +49,7 @@ function LoginForm() {
             toast.error("学号或密码错误")
             break
           default:
-            toast.error("登录失败，请稍后重试")
+            toast.error("登录失败, 请稍后重试")
         }
       })
       .finally(() => setIsLoading(false))
