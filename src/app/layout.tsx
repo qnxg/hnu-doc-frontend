@@ -26,6 +26,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const user = await getUserInfoServer()
+    .then(response => response)
     .catch(() => null)
 
   return (
