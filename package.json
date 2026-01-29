@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --concurrency=auto",
-    "fmt": "eslint --fix --concurrency=auto"
+    "lint": "eslint",
+    "fmt": "eslint --fix"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",
