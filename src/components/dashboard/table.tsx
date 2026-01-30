@@ -37,6 +37,10 @@ function CollectionTableDetail({
           // 对应课程属于哪一年
           // 2025 - 2026学年高数(A1)期末
           return `${item.date.year} - ${item.date.year + 1}学年${item.name}(${item.categories.join(",")})${DOCUMENT_TYPE_MAP.get(item.typ) || "未知考试"}`
+        case "grade":
+          // 对应哪一级学生
+          // 2024级高数(A1)期末
+          return `${item.date.year}级${item.name}(${item.categories.join(",")})${DOCUMENT_TYPE_MAP.get(item.typ) || "未知考试"}`
         default:
           // 未知日期信息
           // 高数(A1)期末
@@ -56,7 +60,7 @@ function CollectionTableDetail({
 
   return (
     <div key={document.id} className="bg-white border border-gray-200 p-3 md:p-4 shadow-sm">
-      <div className="flex flex-col md:flex-row md:documents-center gap-2 md:gap-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
         {/* 主要信息区域 */}
         <div className="flex-1 min-w-0 space-y-1">
           <h4 className="font-medium text-sm md:text-base text-gray-900 truncate">{document.name}</h4>
@@ -64,7 +68,7 @@ function CollectionTableDetail({
         </div>
 
         {/* 右侧信息和按钮区域 */}
-        <div className="flex justify-between md:justify-end documents-center gap-4 md:gap-6">
+        <div className="flex justify-between md:justify-end items-center gap-4 md:gap-6">
           <div className="flex gap-4 md:gap-6 text-xs md:text-sm text-gray-500">
             <span>{`共${document.page}页`}</span>
             <span>{`${document.answer ? "" : "不"}含答案`}</span>
