@@ -1,6 +1,6 @@
 "use client"
 
-import type { UserInfo } from "@/src/apis/user"
+import type { UserInfo } from "@/src/models/user"
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { getUserInfo, userLogout } from "@/src/apis/user"
 

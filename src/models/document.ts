@@ -2,7 +2,7 @@
  * 文档日期信息
  *
  * @interface DocumentDate
- * @property {"year" | "semester"} typ - 日期类型, year: 表示在某一年考试, semester: 表示对应课程属于哪一年, grade: 表示对应哪一级学生
+ * @property {"year" | "semester" | "grade"} typ - 日期类型, year: 表示在某一年考试, semester: 表示对应课程属于哪一年, grade: 表示对应哪一级学生
  * @property {number} year - 年份
  */
 interface DocumentDate {

@@ -13,7 +13,7 @@ export default function Tabbar() {
 
   // 如果用户未登录, 不显示 tabbar
   if (!user) {
-    return null
+    return <></>
   }
 
   // 导航链接配置
