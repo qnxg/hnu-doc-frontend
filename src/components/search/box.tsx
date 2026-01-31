@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 
-interface SearchBoxProps {
-  onSearch?: (keyword: string, types: DocumentType[]) => void
-  defaultKeyword?: string
-  defaultTypes?: DocumentType[]
+export interface SearchBoxProps {
+  onSearch?: (key: string, typs: DocumentType[]) => void
+  defaultKey?: string
+  defaultTyps?: DocumentType[]
 }
 
 const documentTypeLabels: Record<DocumentType, string> = {
@@ -28,14 +28,14 @@ const documentTypeLabels: Record<DocumentType, string> = {
 
 export default function SearchBox({
   onSearch,
-  defaultKeyword = "",
-  defaultTypes = ["final", "mid", "other"],
+  defaultKey = "",
+  defaultTyps = ["final", "mid", "other"],
 }: SearchBoxProps) {
-  const [keyword, setKeyword] = useState(defaultKeyword)
-  const [selectedTypes, setSelectedTypes] = useState<DocumentType[]>(defaultTypes)
+  const [key, setKey] = useState(defaultKey)
+  const [selectedTyps, setSelectedTyps] = useState<DocumentType[]>(defaultTyps)
 
   const handleTypeToggle = (type: DocumentType) => {
-    setSelectedTypes(prev =>
+    setSelectedTyps(prev =>
       prev.includes(type)
         ? prev.filter(t => t !== type)
         : [...prev, type],
@@ -43,7 +43,7 @@ export default function SearchBox({
   }
 
   const handleSearch = () => {
-    onSearch?.(keyword, selectedTypes)
+    onSearch?.(key, selectedTyps)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -53,11 +53,11 @@ export default function SearchBox({
   }
 
   const getTypeLabel = () => {
-    if (selectedTypes.length === 0)
+    if (selectedTyps.length === 0)
       return "选择类型"
-    if (selectedTypes.length === 3)
+    if (selectedTyps.length === 3)
       return "全部类型"
-    return selectedTypes.map(t => documentTypeLabels[t]).join("、")
+    return selectedTyps.map(t => documentTypeLabels[t]).join("、")
   }
 
   return (
@@ -73,19 +73,19 @@ export default function SearchBox({
           <DropdownMenuLabel>试卷类型</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuCheckboxItem
-            checked={selectedTypes.includes("final")}
+            checked={selectedTyps.includes("final")}
             onCheckedChange={() => handleTypeToggle("final")}
           >
             {documentTypeLabels.final}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
-            checked={selectedTypes.includes("mid")}
+            checked={selectedTyps.includes("mid")}
             onCheckedChange={() => handleTypeToggle("mid")}
           >
             {documentTypeLabels.mid}
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
-            checked={selectedTypes.includes("other")}
+            checked={selectedTyps.includes("other")}
             onCheckedChange={() => handleTypeToggle("other")}
           >
             {documentTypeLabels.other}
@@ -96,8 +96,8 @@ export default function SearchBox({
       <Input
         type="text"
         placeholder="搜索科目名称..."
-        value={keyword}
-        onChange={e => setKeyword(e.target.value)}
+        value={key}
+        onChange={e => setKey(e.target.value)}
         onKeyDown={handleKeyDown}
         className="flex-1"
       />

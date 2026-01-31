@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { search } from "@/src/apis/search"
 import SearchBox from "@/src/components/search/box"
+import SearchPagination from "@/src/components/search/pagination"
 import SearchTable from "@/src/components/search/table"
 
 interface SearchParams extends SearchRequest {}
@@ -24,39 +25,66 @@ export default function SearchPage() {
   })
 
   const [subjects, setSubjects] = useState<Subject[]>([])
+  const [totalPages, setTotalPages] = useState(0)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
     search(params)
-      .then(response => setSubjects(response.subjects))
-      .catch(() => setSubjects([]))
+      .then((response) => {
+        setSubjects(response.subjects)
+        setTotalPages(response.pages)
+      })
+      .catch(() => {
+        setSubjects([])
+        setTotalPages(0)
+      })
       .finally(() => setLoading(false))
   }, [params])
 
-  const handleSearch = (keyword: string, types: DocumentType[]) => {
-    const newParams = {
-      ...params,
-      key: keyword,
-      typ: types,
-      page: 1, // Reset to first page on new search
-    }
+  // 统一的搜索参数更新函数
+  const updateSearchParams = (updates: Partial<SearchParams>) => {
+    const newParams = { ...params, ...updates }
     setParams(newParams)
 
-    // Update URL search params
     const urlParams = new URLSearchParams()
-    if (keyword)
-      urlParams.set("key", keyword)
-    types.forEach(type => urlParams.append("typ", type))
+    if (newParams.key)
+      urlParams.set("key", newParams.key)
+    if (newParams.typ)
+      newParams.typ.forEach(type => urlParams.append("typ", type))
+    if (newParams.page)
+      urlParams.set("page", String(newParams.page))
+    if (newParams.pape_size)
+      urlParams.set("page_size", String(newParams.pape_size))
+
     router.push(`/search?${urlParams.toString()}`)
+  }
+
+  const handleSearch = (key: string, typs: DocumentType[]) => {
+    updateSearchParams({
+      key,
+      typ: typs,
+      page: 1,
+    })
+  }
+
+  const handlePageChange = (page: number) => {
+    updateSearchParams({ page })
+  }
+
+  const handleSizeChange = (size: number) => {
+    updateSearchParams({
+      pape_size: size,
+      page: 1,
+    })
   }
 
   return (
     <div className="w-full max-w-6xl flex flex-col gap-8">
       <SearchBox
         onSearch={handleSearch}
-        defaultKeyword={params.key}
-        defaultTypes={params.typ}
+        defaultKey={params.key}
+        defaultTyps={params.typ}
       />
       {loading
         ? (
@@ -65,7 +93,16 @@ export default function SearchPage() {
             </div>
           )
         : (
-            <SearchTable subjects={subjects} />
+            <>
+              <SearchTable subjects={subjects} />
+              <SearchPagination
+                current={params.page ?? 1}
+                total={totalPages}
+                size={params.pape_size ?? 10}
+                onPageChange={handlePageChange}
+                onSizeChange={handleSizeChange}
+              />
+            </>
           )}
     </div>
   )
