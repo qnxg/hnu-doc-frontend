@@ -11,12 +11,22 @@ interface DocumentDate {
 }
 
 /**
+ * 试卷类型
+ *
+ * @type DocumentType
+ * @property {string} final - 期末
+ * @property {string} mid - 期中(含机考)
+ * @property {string} other - 其他
+ */
+export type DocumentType = "final" | "mid" | "other"
+
+/**
  * 试卷信息模型
  *
  * @interface Document
  * @property {number} id - 资料id
  * @property {DocumentDate | null} date - 日期信息, null表示未知年份
- * @property {"final" | "mid" | "other"} typ - 资料类型, final: 期末, mid: 期中(含机考), other: 其他
+ * @property {DocumentType} typ - 资料类型
  * @property {string} name - 资料名称, 一般是课程名称
  * @property {boolean} answer - 是否包含答案
  * @property {number} page - 页数
@@ -28,7 +38,7 @@ interface DocumentDate {
 export interface Document {
   id: number
   date: DocumentDate | null
-  typ: "final" | "mid" | "other"
+  typ: DocumentType
   name: string
   answer: boolean
   page: number
