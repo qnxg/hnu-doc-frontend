@@ -1,12 +1,18 @@
 import type { Document } from "@/src/models/document"
 import { IconDownload } from "@tabler/icons-react"
+import { useState } from "react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
+import { download } from "@/src/apis/download"
+import DownloadModal from "@/src/components/common/download-modal"
 
 export default function DocumentCard({
   document,
 }: Readonly<{
   document: Document
 }>) {
+  const [isDownloading, setIsDownloading] = useState(false)
+
   const description = (item: Document): string => {
     const DOCUMENT_TYPE_MAP = new Map([
       ["final", "期末"],
@@ -42,8 +48,16 @@ export default function DocumentCard({
     }
   }
 
-  const handleDownload = (_id: number) => {
-    // TODO: 试卷下载 API
+  const handleDownload = (id: number) => {
+    setIsDownloading(true)
+    download(id)
+      .then((response) => {
+        toast.success(`开始下载: ${response}`)
+      })
+      .catch(() => {
+        toast.error("下载失败，请稍后重试")
+      })
+      .finally(() => setIsDownloading(false))
   }
 
   return (
@@ -71,6 +85,8 @@ export default function DocumentCard({
           </Button>
         </div>
       </div>
+
+      <DownloadModal isOpen={isDownloading} />
     </div>
   )
 }
