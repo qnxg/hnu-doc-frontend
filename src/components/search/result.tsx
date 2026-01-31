@@ -1,7 +1,21 @@
-export default function ResultTable() {
+"use client"
+
+import type { Document } from "@/src/models/document"
+import DocumentCard from "@/src/components/common/document-card"
+
+export default function ResultTable({
+  documents,
+}: Readonly<{
+  documents: Document[]
+}>) {
   return (
-    <div>
-      这是搜索结果表格
+    <div className="space-y-2">
+      {documents.map(document => (
+        <DocumentCard
+          key={document.id}
+          document={document}
+        />
+      ))}
     </div>
   )
 }

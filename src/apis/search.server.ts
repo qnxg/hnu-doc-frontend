@@ -1,5 +1,5 @@
-import type { DocumentType } from "@/src/models/document"
-import request from "@/src/lib/client"
+import type { Document, DocumentType } from "@/src/models/document"
+import serverRequest from "@/src/lib/server"
 
 export interface SearchRequest {
   key?: string
@@ -27,6 +27,15 @@ export interface SearchResponse {
   pages: number
 }
 
+export interface SearchSubjectRequest {
+  name: string
+  typ: DocumentType[]
+}
+
 export async function search(data: SearchRequest) {
-  return await request.get<SearchResponse>("/search", data)
+  return await serverRequest.get<SearchResponse>("/search", data)
+}
+
+export async function searchSubject(data: SearchSubjectRequest) {
+  return await serverRequest.get<Document[]>("/search/subject", data)
 }
