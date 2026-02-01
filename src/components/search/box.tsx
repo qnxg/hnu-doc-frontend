@@ -2,6 +2,7 @@
 
 import type { DocumentType } from "@/src/models/document"
 import { ChevronDownIcon, SearchIcon } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
@@ -26,13 +27,16 @@ const documentTypeLabels: Record<DocumentType, string> = {
   other: "其他",
 }
 
-export default function SearchBox({
-  onSearch,
-  defaultKey = "",
-  defaultTyps = ["final", "mid", "other"],
-}: SearchBoxProps) {
-  const [key, setKey] = useState(defaultKey)
-  const [selectedTyps, setSelectedTyps] = useState<DocumentType[]>(defaultTyps)
+export default function SearchBox() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const [key, setKey] = useState(searchParams.get("key") || "")
+  const [selectedTyps, setSelectedTyps] = useState<DocumentType[]>(
+    searchParams.getAll("typ").length > 0
+      ? (searchParams.getAll("typ") as DocumentType[])
+      : ["final", "mid", "other"],
+  )
 
   const handleTypeToggle = (type: DocumentType) => {
     setSelectedTyps(prev =>
@@ -43,7 +47,13 @@ export default function SearchBox({
   }
 
   const handleSearch = () => {
-    onSearch?.(key, selectedTyps)
+    const urlParams = new URLSearchParams()
+    if (key)
+      urlParams.set("key", key)
+    if (selectedTyps.length > 0) {
+      selectedTyps.forEach(type => urlParams.append("typ", type))
+    }
+    router.push(`/search?${urlParams.toString()}`)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

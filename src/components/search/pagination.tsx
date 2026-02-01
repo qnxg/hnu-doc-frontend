@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter, useSearchParams } from "next/navigation"
 import { Field, FieldLabel } from "@/components/ui/field"
 import {
   Pagination,
@@ -19,21 +20,18 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-interface SearchPaginationProps {
-  current: number
-  total: number
-  size: number
-  onPageChange: (page: number) => void
-  onSizeChange: (size: number) => void
-}
-
 export default function SearchPagination({
   current,
   total,
   size,
-  onPageChange,
-  onSizeChange,
-}: SearchPaginationProps) {
+}: {
+  current: number
+  total: number
+  size: number
+}) {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
   // 生成页码数组
   const generatePageNumbers = () => {
     const pages: (number | "ellipsis")[] = []
@@ -73,24 +71,33 @@ export default function SearchPagination({
     return pages
   }
 
+  const navigate = (page: number | null, pageSize: number | null = null) => {
+    const params = new URLSearchParams(searchParams)
+    if (page) {
+      params.set("page", String(page))
+    }
+
+    if (pageSize) {
+      params.set("page_size", String(pageSize))
+    }
+
+    router.push(`/search?${params.toString()}`)
+  }
+
   const handlePrevious = () => {
     if (current > 1) {
-      onPageChange(current - 1)
+      navigate(current - 1)
     }
   }
 
   const handleNext = () => {
     if (current < total) {
-      onPageChange(current + 1)
+      navigate(current + 1)
     }
   }
 
   const handleSizeChange = (value: string) => {
-    onSizeChange(Number(value))
-  }
-
-  if (total <= 1) {
-    return null
+    navigate(null, Number(value))
   }
 
   const pageNumbers = generatePageNumbers()
@@ -108,7 +115,6 @@ export default function SearchPagination({
               <SelectItem value="10">10</SelectItem>
               <SelectItem value="20">20</SelectItem>
               <SelectItem value="50">50</SelectItem>
-              <SelectItem value="100">100</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -139,7 +145,7 @@ export default function SearchPagination({
                       href="#"
                       onClick={(e) => {
                         e.preventDefault()
-                        onPageChange(page)
+                        navigate(page)
                       }}
                       isActive={current === page}
                     >

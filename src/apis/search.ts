@@ -4,7 +4,7 @@ import request from "@/src/lib/client"
 export interface SearchRequest {
   key?: string
   typ: DocumentType[]
-  pape_size?: number
+  page_size?: number
   page?: number
 }
 

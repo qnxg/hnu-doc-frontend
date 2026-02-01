@@ -1,7 +1,5 @@
-"use client"
-
 import type { Subject } from "@/src/apis/search"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
   Table,
@@ -12,17 +10,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-interface SearchTableProps {
-  subjects?: Subject[]
-}
-
-export default function SearchTable({ subjects = [] }: SearchTableProps) {
-  const router = useRouter()
-
-  const handleViewDetails = (name: string) => {
-    router.push(`/search/${encodeURIComponent(name)}`)
-  }
-
+export default async function SearchTable({
+  subjects,
+}: {
+  subjects: Subject[]
+}) {
   if (subjects.length === 0) {
     return (
       <div className="flex items-center justify-center py-12 text-muted-foreground">
@@ -54,9 +46,11 @@ export default function SearchTable({ subjects = [] }: SearchTableProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleViewDetails(subject.name)}
+                    asChild
                   >
-                    详情
+                    <Link href={`/search/${encodeURIComponent(subject.name)}`}>
+                      详情
+                    </Link>
                   </Button>
                 </TableCell>
               </TableRow>
@@ -87,10 +81,12 @@ export default function SearchTable({ subjects = [] }: SearchTableProps) {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => handleViewDetails(subject.name)}
               className="shrink-0"
+              asChild
             >
-              详情
+              <Link href={`/search/${encodeURIComponent(subject.name)}`}>
+                详情
+              </Link>
             </Button>
           </div>
         ))}
