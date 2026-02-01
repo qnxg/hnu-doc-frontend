@@ -1,3 +1,4 @@
+import type { DocumentType } from "@/src/models/document"
 import { IconArrowLeft } from "@tabler/icons-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -7,13 +8,13 @@ import ResultTable from "@/src/components/search/result"
 export default async function SearchResultPage({
   params,
 }: {
-  params: Promise<{ name: string }>
+  params: Promise<{ name: string, typ: DocumentType[] }>
 }) {
-  const { name } = await params
+  const { name, typ } = await params
 
   const documents = await searchSubject({
     name: decodeURIComponent(name),
-    typ: ["final", "mid", "other"],
+    typ: Array.isArray(typ) ? typ : ["final", "mid", "other"],
   }).catch(() => [])
 
   return (

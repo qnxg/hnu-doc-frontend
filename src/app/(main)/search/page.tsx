@@ -21,7 +21,10 @@ export default async function SearchPage({
   return (
     <div className="w-full max-w-6xl flex flex-col gap-8">
       <SearchBox />
-      <SearchTable subjects={subjects} />
+      <SearchTable
+        subjects={subjects}
+        typs={params.typ}
+      />
       <SearchPagination
         current={Number(params.page) || 1}
         total={pages}

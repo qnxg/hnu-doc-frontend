@@ -1,4 +1,5 @@
 import type { Subject } from "@/src/apis/search"
+import type { DocumentType } from "@/src/models/document"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,10 +12,18 @@ import {
 } from "@/components/ui/table"
 
 export default async function SearchTable({
+  typs,
   subjects,
 }: {
+  typs: DocumentType[]
   subjects: Subject[]
 }) {
+  const getLink = (name: string) => {
+    const urlParams = new URLSearchParams()
+    typs.forEach(item => urlParams.append("typ", item))
+    return `/search/${encodeURIComponent(name)}?${urlParams.toString()}`
+  }
+
   if (subjects.length === 0) {
     return (
       <div className="flex items-center justify-center py-12 text-muted-foreground">
@@ -48,7 +57,7 @@ export default async function SearchTable({
                     size="sm"
                     asChild
                   >
-                    <Link href={`/search/${encodeURIComponent(subject.name)}`}>
+                    <Link href={getLink(subject.name)}>
                       详情
                     </Link>
                   </Button>
@@ -84,7 +93,7 @@ export default async function SearchTable({
               className="shrink-0"
               asChild
             >
-              <Link href={`/search/${encodeURIComponent(subject.name)}`}>
+              <Link href={getLink(subject.name)}>
                 详情
               </Link>
             </Button>

@@ -51,7 +51,7 @@ export default function SearchBox() {
     if (key)
       urlParams.set("key", key)
     if (selectedTyps.length > 0) {
-      selectedTyps.forEach(type => urlParams.append("typ", type))
+      selectedTyps.forEach(item => urlParams.append("typ", item))
     }
     router.push(`/search?${urlParams.toString()}`)
   }
