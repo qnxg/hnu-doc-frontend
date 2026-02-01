@@ -1,5 +1,5 @@
 import type { Subject } from "@/src/apis/search"
-import type { DocumentType } from "@/src/models/document"
+import type { SearchParams } from "@/src/app/(main)/search/page"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {
@@ -10,17 +10,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { search } from "@/src/apis/search"
+import SearchPagination from "@/src/components/search/pagination"
 
 export default async function SearchTable({
-  typs,
-  subjects,
+  params,
 }: {
-  typs: DocumentType[]
-  subjects: Subject[]
+  params: SearchParams
 }) {
+  const { subjects, pages }: {
+    subjects: Subject[]
+    pages: number
+  } = await search(params)
+
   const getLink = (name: string) => {
     const urlParams = new URLSearchParams()
-    typs.forEach(item => urlParams.append("typ", item))
+    if (params.typ) {
+      params.typ.forEach(item => urlParams.append("typ", item))
+    }
     return `/search/${encodeURIComponent(name)}?${urlParams.toString()}`
   }
 
@@ -100,6 +107,13 @@ export default async function SearchTable({
           </div>
         ))}
       </div>
+
+      {/* 分页组件 */}
+      <SearchPagination
+        current={Number(params.page) || 1}
+        total={pages}
+        size={Number(params.page_size) || 10}
+      />
     </>
   )
 }
