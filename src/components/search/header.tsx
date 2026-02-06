@@ -32,6 +32,11 @@ export default function ResultHeader({
   const router = useRouter()
 
   const [selectedTyps, setSelectedTyps] = useState<DocumentType[]>(typs)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   useEffect(() => {
     router.replace(`/search/${encodeURIComponent(name)}?${selectedTyps.map(item => `typ=${item}`).join("&")}`)
@@ -68,12 +73,21 @@ export default function ResultHeader({
         <h1 className="text-xl font-semibold flex items-center gap-2">
           类型:
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-full sm:w-40 justify-between">
-                {getTypeLabel()}
-                <ChevronDownIcon className="ml-2" />
-              </Button>
-            </DropdownMenuTrigger>
+            { isClient
+              ? (
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full sm:w-40 justify-between">
+                      { getTypeLabel() }
+                      <ChevronDownIcon className="ml-2" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                )
+              : (
+                  <Button variant="outline" className="w-full sm:w-40 justify-between">
+                    加载中...
+                    <ChevronDownIcon className="ml-2" />
+                  </Button>
+                )}
             <DropdownMenuContent className="w-40">
               <DropdownMenuLabel>试卷类型</DropdownMenuLabel>
               <DropdownMenuSeparator />
