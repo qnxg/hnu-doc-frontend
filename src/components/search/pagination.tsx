@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 import { Field, FieldLabel } from "@/components/ui/field"
 import {
   Pagination,
@@ -31,6 +32,11 @@ export default function SearchPagination({
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // 生成页码数组
   const generatePageNumbers = () => {
@@ -106,18 +112,24 @@ export default function SearchPagination({
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
       <Field orientation="horizontal" className="w-fit">
         <FieldLabel htmlFor="select-rows-per-page">每页显示</FieldLabel>
-        <Select value={String(size)} onValueChange={handleSizeChange}>
-          <SelectTrigger className="w-20" id="select-rows-per-page">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent align="start">
-            <SelectGroup>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="20">20</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        { isClient
+          ? (
+              <Select value={String(size)} onValueChange={handleSizeChange}>
+                <SelectTrigger className="w-20" id="select-rows-per-page">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent align="start">
+                  <SelectGroup>
+                    <SelectItem value="10">10</SelectItem>
+                    <SelectItem value="20">20</SelectItem>
+                    <SelectItem value="50">50</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )
+          : (
+              <></>
+            )}
       </Field>
 
       <Pagination className="mx-0 w-auto">

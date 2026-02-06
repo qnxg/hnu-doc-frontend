@@ -3,7 +3,7 @@
 import type { DocumentType } from "@/src/models/document"
 import { ChevronDownIcon, SearchIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -37,6 +37,11 @@ export default function SearchBox() {
       ? (searchParams.getAll("typ") as DocumentType[])
       : ["final", "mid", "other"],
   )
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleTypeToggle = (type: DocumentType) => {
     setSelectedTyps(prev =>
@@ -73,12 +78,21 @@ export default function SearchBox() {
   return (
     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="w-full sm:w-40 justify-between">
-            {getTypeLabel()}
-            <ChevronDownIcon className="ml-2" />
-          </Button>
-        </DropdownMenuTrigger>
+        { isClient
+          ? (
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full sm:w-40 justify-between">
+                  { getTypeLabel() }
+                  <ChevronDownIcon className="ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+            )
+          : (
+              <Button variant="outline" className="w-full sm:w-40 justify-between">
+                加载中...
+                <ChevronDownIcon className="ml-2" />
+              </Button>
+            )}
         <DropdownMenuContent className="w-40">
           <DropdownMenuLabel>试卷类型</DropdownMenuLabel>
           <DropdownMenuSeparator />

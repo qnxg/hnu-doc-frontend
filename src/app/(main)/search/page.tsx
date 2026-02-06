@@ -17,7 +17,7 @@ export default async function SearchPage({
       <SearchBox />
       <Suspense fallback={(
         <div className="flex items-center justify-center py-12 text-muted-foreground">
-          加载中...
+          <h1 className="text-xl font-semibold">加载中...</h1>
         </div>
       )}
       >
