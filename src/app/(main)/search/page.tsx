@@ -14,6 +14,9 @@ export default async function SearchPage({
 
   return (
     <div className="w-full max-w-6xl flex flex-col gap-8">
+      <h1 className="w-full text-center text-3xl font-semibold">
+        搜索科目
+      </h1>
       <SearchBox />
       <Suspense fallback={(
         <div className="flex items-center justify-center py-12 text-muted-foreground">

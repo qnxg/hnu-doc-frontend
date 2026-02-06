@@ -22,9 +22,9 @@ export default function MainLayout({
   }, [user])
 
   return (
-    <div className="flex flex-col min-h-screen items-center">
+    <div className="flex flex-col h-screen items-center">
       <Navbar />
-      <div className="flex flex-1 w-full items-center justify-center px-4 lg:px-16 pb-16 md:pb-4">
+      <div className="flex flex-1 w-full overflow-y-scroll items-start justify-center pt-4 md:pt-8 px-4 lg:px-16">
         {children}
       </div>
       <Tabbar />

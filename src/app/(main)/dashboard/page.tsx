@@ -9,7 +9,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="w-full max-w-6xl flex flex-col gap-8">
-      <div className="w-full text-center text-3xl">
+      <div className="w-full text-center text-3xl font-semibold">
         常用试卷集
       </div>
       <Suspense fallback={(

@@ -107,7 +107,7 @@ function LoginForm() {
 export default function IndexPage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 lg:px-16">
-      <div className="w-full max-w-6xl flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+      <div className="w-full max-w-6xl flex flex-col lg:flex-row items-center justify-between gap-2 sm:gap-8 lg:gap-12">
         <div className="flex-1 max-w-2xl flex flex-col gap-6 lg:gap-8 text-center lg:text-left">
           <span className="text-3xl lg:text-4xl xl:text-5xl font-bold">湖南大学试卷库</span>
           <span className="text-base lg:text-xl xl:text-2xl text-gray-600 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto consequatur cupiditate dolorem doloribus ducimus eligendi esse exercitationem explicabo ipsam libero maxime nisi nostrum, nulla odit quas quia ratione rem!</span>

@@ -59,59 +59,61 @@ export default function ResultHeader({
   }
 
   return (
-    <div className="flex items-center gap-4">
-      <Link href={`/search?${typs.map(item => `typ=${item}`).join("&")}`}>
-        <Button variant="outline" size="sm">
-          <IconArrowLeft className="mr-2" />
-          返回
-        </Button>
-      </Link>
-      <div className="flex-1 flex items-center justify-between">
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2 md:gap-4">
+        <Link href={`/search?${typs.map(item => `typ=${item}`).join("&")}`}>
+          <Button variant="outline" size="sm">
+            <IconArrowLeft className="mr-2" />
+            返回
+          </Button>
+        </Link>
         <h1 className="text-xl font-semibold">
-          { `科目: ${name}` }
+          <span className="hidden sm:inline-block">科目: </span>
+          {" "}
+          {name}
         </h1>
-        <h1 className="text-xl font-semibold flex items-center gap-2">
-          类型:
-          <DropdownMenu>
-            { isClient
-              ? (
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full sm:w-40 justify-between">
-                      { getTypeLabel() }
-                      <ChevronDownIcon className="ml-2" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                )
-              : (
+      </div>
+      <div className="flex items-center gap-2 md:gap-4">
+        <h1 className="text-xl font-semibold hidden md:block">类型:</h1>
+        <DropdownMenu>
+          { isClient
+            ? (
+                <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full sm:w-40 justify-between">
-                    加载中...
+                    { getTypeLabel() }
                     <ChevronDownIcon className="ml-2" />
                   </Button>
-                )}
-            <DropdownMenuContent className="w-40">
-              <DropdownMenuLabel>试卷类型</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem
-                checked={selectedTyps.includes("final")}
-                onCheckedChange={() => handleTypeToggle("final")}
-              >
-                {documentTypeLabels.final}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={selectedTyps.includes("mid")}
-                onCheckedChange={() => handleTypeToggle("mid")}
-              >
-                {documentTypeLabels.mid}
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem
-                checked={selectedTyps.includes("other")}
-                onCheckedChange={() => handleTypeToggle("other")}
-              >
-                {documentTypeLabels.other}
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </h1>
+                </DropdownMenuTrigger>
+              )
+            : (
+                <Button variant="outline" className="w-full sm:w-40 justify-between">
+                  加载中...
+                  <ChevronDownIcon className="ml-2" />
+                </Button>
+              )}
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuLabel>试卷类型</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuCheckboxItem
+              checked={selectedTyps.includes("final")}
+              onCheckedChange={() => handleTypeToggle("final")}
+            >
+              {documentTypeLabels.final}
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={selectedTyps.includes("mid")}
+              onCheckedChange={() => handleTypeToggle("mid")}
+            >
+              {documentTypeLabels.mid}
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={selectedTyps.includes("other")}
+              onCheckedChange={() => handleTypeToggle("other")}
+            >
+              {documentTypeLabels.other}
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   )

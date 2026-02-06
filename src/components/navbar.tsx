@@ -40,7 +40,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="w-full h-16 shadow-md flex items-center justify-between px-4 md:px-8 bg-white">
+    <nav className="w-full py-2 md:py-4 shadow-md flex items-center justify-between px-4 md:px-8 bg-white">
       {/* 左侧标题 */ }
       <div className="flex items-center">
         <Link
@@ -74,7 +74,6 @@ export default function Navbar() {
 
       {/* 右侧用户菜单 */ }
       <div className="flex items-center">
-
         <DropdownMenu>
           { isClient
             ? (
