@@ -3,7 +3,7 @@
 import type { DocumentType } from "@/src/models/document"
 import { ChevronDownIcon, SearchIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
